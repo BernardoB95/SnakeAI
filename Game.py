@@ -55,10 +55,7 @@ class Game:
             self.food_position = self.food.generate_food(self.boundaries)
             self.snake.grow()
 
-        if self.snake.ateItself():
-            self.running = False
-
-        if self.snake.outOfBoundaries(self.boundaries):
+        if self.snake.isCollision(self.boundaries):
             self.running = False
 
     def render(self):
@@ -77,4 +74,4 @@ class Game:
             self.processInput()
             self.update()
             self.render()
-            self.clock.tick(25)
+            self.clock.tick(30)

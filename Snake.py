@@ -45,7 +45,7 @@ class Snake:
             self.snake_[0] = [self.snake_[0][0] - 10, self.snake_[0][1]]
 
     def foodWasEaten(self, food):
-        return (self.snake_[0][0] == food[0]) and (self.snake_[0][1] == food[1])
+        return self.snake_[0] == list(food)
 
     def grow(self):
         self.snake_.append([0, 0])
@@ -61,16 +61,6 @@ class Snake:
         for i in range(len(self.snake_) - 1, 0, -1):
             self.snake_[i] = [self.snake_[i - 1][0], self.snake_[i - 1][1]]
 
-    def ateItself(self):
-
-        for i in range(1, len(self.snake_)):
-            segment = self.snake_[i]
-
-            if self.snake_[0][0] == segment[0] and self.snake_[0][1] == segment[1]:
-                return True
-
-        return False
-
     def outOfBoundaries(self, boundaries):
 
         outOfXL = self.snake_[0][0] < boundaries[2]
@@ -79,3 +69,13 @@ class Snake:
         outOfYD = self.snake_[0][1] > boundaries[1]
 
         return outOfXL or outOfXR or outOfYU or outOfYD
+
+    def isCollision(self, boundaries, point=None):
+        if point is None:
+            point = self.snake_[0]
+
+        if self.outOfBoundaries(boundaries):
+            return True
+
+        if point in self.snake_[1:]:
+            return True
