@@ -1,25 +1,14 @@
 import pygame
-from Snake import Snake
-from Food import Food
+from IGame import IGame
 
 
-class Game:
+class Game(IGame):
     """
-    This class will use the Game Loop Pattern
+    This class will use the Game Loop Pattern and implement IGame Abstract Class (Interface)
     """
 
     def __init__(self):
-        pygame.init()
-        pygame.display.set_caption("Snake")
-        self.window = pygame.display.set_mode((640, 480))
-        self.clock = pygame.time.Clock()
-        self.PURPLE = (255, 0, 255)
-        self.LIGHT_ORANGE = (255, 226, 149)
-        self.boundaries = (10, 470, 10, 630)
-        self.snake = Snake()
-        self.food = Food()
-        self.food_position = self.food.generate_food(self.boundaries)
-        self.running = True
+        super().__init__()
 
     def processInput(self):
 
@@ -70,8 +59,4 @@ class Game:
         pygame.display.update()
 
     def run(self):
-        while self.running:
-            self.processInput()
-            self.update()
-            self.render()
-            self.clock.tick(30)
+        super().run()
