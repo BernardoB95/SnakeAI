@@ -48,7 +48,7 @@ class DeepQNetwork(nn.Module):
         :return:
         :rtype:
         """
-        # TODO: Missing implementation of reward system and done
+
         state = torch.tensor(state, dtype=torch.float)
         action = torch.tensor(action, dtype=torch.float)
         reward = torch.tensor(reward, dtype=torch.float)

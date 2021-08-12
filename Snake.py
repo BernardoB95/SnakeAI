@@ -45,6 +45,7 @@ class Snake:
             self.snake_[0] = [self.snake_[0][0] - 10, self.snake_[0][1]]
 
     def foodWasEaten(self, food):
+        #print(self.snake_[0], list(food))
         return self.snake_[0] == list(food)
 
     def grow(self):
@@ -63,10 +64,10 @@ class Snake:
 
     def outOfBoundaries(self, boundaries):
 
-        outOfXL = self.snake_[0][0] < boundaries[2]
-        outOfXR = self.snake_[0][0] > boundaries[3]
-        outOfYU = self.snake_[0][1] < boundaries[0]
-        outOfYD = self.snake_[0][1] > boundaries[1]
+        outOfXL = self.snake_[0][0] - 10 < boundaries[2]
+        outOfXR = self.snake_[0][0] + 15 > boundaries[3]
+        outOfYU = self.snake_[0][1] - 5 < boundaries[0]
+        outOfYD = self.snake_[0][1] + 15 > boundaries[1]
 
         return outOfXL or outOfXR or outOfYU or outOfYD
 

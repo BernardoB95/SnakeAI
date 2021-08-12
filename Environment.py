@@ -1,5 +1,7 @@
 import pygame
 from IGame import IGame
+from Snake import Snake
+from Food import Food
 
 
 class Environment(IGame):
@@ -10,6 +12,7 @@ class Environment(IGame):
         self.agent = agent
         self.reward = 0
         self.score = 0
+        self.record = 0
         self.frame_iteration = 0
         self.state = []
         self.action = []
@@ -60,7 +63,7 @@ class Environment(IGame):
             self.score += 1
             self.reward = 10
 
-        if self.snake.isCollision(self.boundaries) or self.frame_iteration > 100 * len(self.snake.snake_):
+        if self.snake.isCollision(self.boundaries) or self.frame_iteration > 150 * len(self.snake.snake_):
             self.running = False
             self.reward = -10
 
@@ -85,14 +88,33 @@ class Environment(IGame):
         self.window.blit(score, score_surface)
         pygame.display.update()
 
+    def reset(self):
+        self.snake = Snake()
+        self.food = Food()
+        self.food_position = self.food.generate_food(self.boundaries)
+        self.score = 0
+        self.frame_iteration = 0
+
     def run(self):
 
-        while self.running:
+        while True:
             self.processInput()
             self.update()
             self.render()
             self.clock.tick(30)
 
+            # TODO: Fix this loop
             if not self.running:
-                pass
-                # TODO: Apply long memory when done and reset
+
+                # Train long memory
+                self.agent.train_replay_memory()
+                self.agent.n_games += 1
+
+                if self.score > self.record:
+                    self.record = self.score
+                    self.agent.model.save()
+
+                print(f"Game #{self.agent.n_games} | Score: {self.score} | Record: {self.record}")
+                self.reset()
+
+                self.running = True
