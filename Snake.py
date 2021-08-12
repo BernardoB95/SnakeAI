@@ -79,3 +79,5 @@ class Snake:
 
         if point in self.snake_[1:]:
             return True
+
+        return False

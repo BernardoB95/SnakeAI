@@ -17,8 +17,11 @@ class DeepQNetwork(nn.Module):
 
         self.lr = lr
         self.gamma = gamma
-        self.optimizer = optim.Adam(self.parameter(), lr=self.lr)
+        self.optimizer = optim.Adam(self.parameters(), lr=self.lr)
         self.criterion = nn.MSELoss()
+
+    def forward(self, x):
+        return self.fcn(x)
 
     def save(self, file_name='model.pth'):
         directory = './model'
