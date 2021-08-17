@@ -45,7 +45,10 @@ class Snake:
             self.snake_[0] = [self.snake_[0][0] - 10, self.snake_[0][1]]
 
     def foodWasEaten(self, food):
-        #print(self.snake_[0], list(food))
+        # food_x_range = food[0] + 10
+        # food_y_range = food[1] + 10
+        # if food[0] < self.snake_[0][0] < food_x_range and food[1] < self.snake_[0][1] < food_y_range:
+        #     print('passou pela comida')
         return self.snake_[0] == list(food)
 
     def grow(self):

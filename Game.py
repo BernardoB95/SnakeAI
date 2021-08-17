@@ -38,14 +38,17 @@ class Game(IGame):
                     self.snake.pivotBehaviourX(10, "RIGHT")
 
     def update(self):
-        self.snake.applyMovementInertia()
+        # self.snake.applyMovementInertia()
 
+        # print(self.snake.snake_[0], self.food_position)
         if self.snake.foodWasEaten(self.food_position):
             self.food_position = self.food.generate_food(self.boundaries)
             self.snake.grow()
 
         if self.snake.isCollision(self.boundaries):
             self.running = False
+
+        self.snake.applyMovementInertia()
 
     def render(self):
         self.window.fill((0, 0, 0))

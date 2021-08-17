@@ -7,13 +7,11 @@ import os
 class DeepQNetwork(nn.Module):
     def __init__(self, inputs, lr, gamma):
         super().__init__()
-        self.fcn = nn.Sequential(nn.Linear(inputs, 256),
+        self.fcn = nn.Sequential(nn.Linear(inputs, 1024),
+                                 # nn.ReLU(),
+                                 # nn.Linear(256, 120),
                                  nn.ReLU(),
-                                 nn.Linear(256, 120),
-                                 nn.Dropout(p=0.1),
-                                 nn.ReLU(),
-                                 nn.Linear(120, 3),
-                                 nn.Dropout(p=0.15))
+                                 nn.Linear(1024, 3))
 
         self.lr = lr
         self.gamma = gamma

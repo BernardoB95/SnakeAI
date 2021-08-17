@@ -10,7 +10,7 @@ class Agent:
     def __init__(self):
         self._memory_size = 100000
         self._batch_size = 1000
-        self.lr = 0.001
+        self.lr = 0.0015
         self.n_games = 0
         self.epsilon = 0  # Randomness
         self.gamma = 0.9  # discount rate
@@ -91,10 +91,10 @@ class Agent:
 
     def get_action(self, state):
         # Define the Exploration / Exploitation tradeoff
-        self.epsilon = 150 - self.n_games
+        self.epsilon = 300 - self.n_games
         action = [0, 0, 0]
 
-        if random.randint(0, 100) < self.epsilon:
+        if random.randint(0, 250) < self.epsilon:
             random_action = random.randint(0, 2)
             action[random_action] = 1
 

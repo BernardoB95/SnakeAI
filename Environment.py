@@ -2,6 +2,7 @@ import pygame
 from IGame import IGame
 from Snake import Snake
 from Food import Food
+from Utils import food_halo
 
 
 class Environment(IGame):
@@ -55,7 +56,16 @@ class Environment(IGame):
 
     def update(self):
         self.reward = 0
-        self.snake.applyMovementInertia()
+        # self.snake.applyMovementInertia()
+        # performing_double_steps(self.snake.snake_[0], self.food_position)
+
+        first_ring, second_ring = food_halo(self.food_position)
+
+        if self.snake.snake_[0] in second_ring:
+            self.reward = 0.005
+
+        if self.snake.snake_[0] in first_ring:
+            self.reward = 0.05
 
         if self.snake.foodWasEaten(self.food_position):
             self.food_position = self.food.generate_food(self.boundaries)
@@ -66,6 +76,8 @@ class Environment(IGame):
         if self.snake.isCollision(self.boundaries) or self.frame_iteration > 150 * len(self.snake.snake_):
             self.running = False
             self.reward = -10
+
+        self.snake.applyMovementInertia()
 
         # Train short memory after each iteration
         new_state = self.agent.get_state(self.snake, self.food_position, self.boundaries)
